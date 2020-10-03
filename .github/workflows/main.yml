@@ -32,11 +32,11 @@ jobs:
         run: |
           tar xJf qt-everywhere-src-5.15.1.tar.xz
           cd qt-everywhere-src-5.15.1
-          ./configure -static -prefix $GITHUB_WORKSPACE
+          ./configure -static -prefix $GITHUB_WORKSPACE/qt
           make -j$(nproc)
           make install
       - name: Finalizing
-        run: tar cJf qt.tar.xz out/*
+        run: tar cJf qt.tar.xz qt
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:
