@@ -32,7 +32,8 @@ jobs:
         run: |
           unzip -q qt-everywhere-src-5.15.1.zip
           cd qt-everywhere-src-5.15.1
-          dos2unix ./configure -static -prefix ../out
+          dos2unix configure
+          ./configure -static -prefix ../out
           make -j$(nproc)
           make install
       - name: Finalizing
