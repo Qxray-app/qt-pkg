@@ -32,7 +32,7 @@ jobs:
         run: |
           tar xJf qt-everywhere-src-5.15.1.tar.xz
           cd qt-everywhere-src-5.15.1
-          ./configure -static -release -opensource -confirm-license -nomake examples -nomake tests --prefix $GITHUB_WORKSPACE/qt
+          ./configure -static -release -opensource -confirm-license -nomake examples -nomake tests -prefix $GITHUB_WORKSPACE/qt
           make -j$(nproc)
           make install
       - name: Finalizing
