@@ -23,10 +23,10 @@ jobs:
           repository: fcitx/fcitx5-qt
       # Runs a single command using the runners shell
       - name: Install dependencies
-        run: sudo apt-get install -y extra-cmake-modules qt5-default ninja-build
+        run: sudo apt-get install -y extra-cmake-modules qt5-default
       - name: Building
         run: |
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF
+          cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF
           cmake --build .
           cmake --install .
       - name: Finalizing
