@@ -1,0 +1,41 @@
+# This is a basic workflow to help you get started with Actions
+
+name: Fcitx5 plugin for Qt
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events but only for the main branch
+on:
+  push:
+    branches: [main]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-16.04
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+        with:
+          repository: fcitx/fcitx5-qt
+      # Runs a single command using the runners shell
+      - name: Install dependencies
+        run: sudo apt-get install -y extra-cmake-modules qt5-default ninja
+      - name: Building
+        run: |
+          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON
+          cmake --build .
+          cmake --install .
+      - name: Finalizing
+        run: tar cJf fcitx5-qt5.tar.xz out/*
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: fcitx5-qt5.tar.xz
+          asset_name: fcitx5-qt5.tar.xz
+          tag: bruh
+          overwrite: true
