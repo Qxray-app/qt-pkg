@@ -21,24 +21,25 @@ jobs:
       - uses: actions/checkout@v2
         with:
           repository: fcitx/fcitx5-qt
+      - uses: jurplel/install-qt-action@v2
+        with:
+          version: 5.15.1
+          arch: x64
+          cached: ${{ steps.cache-qt.outputs.cache-hit }
       # Runs a single command using the runners shell
       - name: Install dependencies
         run: |
-          sudo apt-get install -y extra-cmake-modules libgl1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev ninja-build tree
-          wget https://github.com/Qv2ray/qt-pkg/releases/download/bruh/qt.tar.xz
-          tar xJf qt.tar.xz
+          sudo apt-get install -y extra-cmake-modules libgl1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev ninja-build
       - name: Building
         run: |
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF -DQt5_DIR=$GITHUB_WORKSPACE/qt/lib/cmake/Qt5
+          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF
           cmake --build .
           cmake --install .
-      - name: Finalizing
-        run: tree $GITHUB_WORKSPACE/out
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: fcitx5-qt5.tar.xz
-          asset_name: fcitx5-qt5.tar.xz
+          file: qt/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+          asset_name: libfcitx5platforminputcontextplugin.so
           tag: bruh
           overwrite: true
