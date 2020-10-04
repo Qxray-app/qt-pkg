@@ -24,16 +24,16 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install dependencies
         run: |
-          sudo apt-get install -y extra-cmake-modules libgl1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev
+          sudo apt-get install -y extra-cmake-modules libgl1-mesa-dev libfontconfig1-dev libfreetype6-dev libx11-dev libx11-xcb-dev libxext-dev libxfixes-dev libxi-dev libxrender-dev libxcb1-dev libxcb-glx0-dev libxcb-keysyms1-dev libxcb-image0-dev libxcb-shm0-dev libxcb-icccm4-dev libxcb-sync0-dev libxcb-xfixes0-dev libxcb-shape0-dev libxcb-randr0-dev libxcb-render-util0-dev libxcb-xinerama0-dev libxkbcommon-dev libxkbcommon-x11-dev ninja-build
           wget https://github.com/Qv2ray/qt-pkg/releases/download/bruh/qt.tar.xz
           tar xJf qt.tar.xz
       - name: Building
         run: |
-          cmake . -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF -DQt5_DIR=$GITHUB_WORKSPACE/qt/lib/cmake/Qt5
+          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF -DQt5_DIR=$GITHUB_WORKSPACE/qt/lib/cmake/Qt5
           cmake --build .
           cmake --install .
       - name: Finalizing
-        run: tar cJf fcitx5-qt5.tar.xz out/*
+        run: tar cJf fcitx5-qt5.tar.xz -C out .
       - name: Upload binaries to release
         uses: svenstaro/upload-release-action@v1-release
         with:
