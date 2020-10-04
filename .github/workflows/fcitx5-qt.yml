@@ -26,7 +26,7 @@ jobs:
         run: sudo apt-get install -y extra-cmake-modules qt5-default ninja-build
       - name: Building
         run: |
-          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON
+          cmake . -GNinja -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$GITHUB_WORKSPACE/out -DBUILD_ONLY_PLUGIN=ON -DENABLE_QT4=OFF
           cmake --build .
           cmake --install .
       - name: Finalizing
