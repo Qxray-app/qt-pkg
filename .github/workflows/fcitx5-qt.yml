@@ -39,7 +39,7 @@ jobs:
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: qt/plugins/platforminputcontexts/libfcitx5platforminputcontextplugin.so
+          file: qt5/platforminputcontext/libfcitx5platforminputcontextplugin.so
           asset_name: libfcitx5platforminputcontextplugin.so
           tag: bruh
           overwrite: true
