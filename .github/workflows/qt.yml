@@ -14,7 +14,7 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-16.04
-    container: ubuntu:xenial
+    container: debian:stretch
     env:
       DEBIAN_FRONTEND: noninteractive
 
@@ -30,7 +30,6 @@ jobs:
       # Runs a single command using the runners shell
       - name: Install dependencies
         run: |
-          echo ZGViIFthcmNoPWFybTY0XSBodHRwOi8vcG9ydHMudWJ1bnR1LmNvbS91YnVudHUtcG9ydHMvIHhlbmlhbCBtYWluIG11bHRpdmVyc2UgcmVzdHJpY3RlZCB1bml2ZXJzZQpkZWIgW2FyY2g9YXJtNjRdIGh0dHA6Ly9wb3J0cy51YnVudHUuY29tL3VidW50dS1wb3J0cy8geGVuaWFsLXVwZGF0ZXMgbWFpbiBtdWx0aXZlcnNlIHJlc3RyaWN0ZWQgdW5pdmVyc2UK | base64 -d > /etc/apt/sources.list.d/ports.list
           dpkg --add-architecture arm64
           apt-get update
           apt-get install -y build-essential crossbuild-essential-arm64
