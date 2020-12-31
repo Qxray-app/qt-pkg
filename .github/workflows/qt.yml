@@ -14,19 +14,25 @@ jobs:
   build:
     # The type of runner that the job will run on
     runs-on: ubuntu-16.04
+    container: ubuntu:xenial
+    env:
+      DEBIAN_FRONTEND: noninteractive
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Install git
+        run: |
+          apt-get install git wget
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
       # Runs a single command using the runners shell
       - name: Install dependencies
         run: |
-          echo ZGViIFthcmNoPWFybTY0XSBodHRwOi8vcG9ydHMudWJ1bnR1LmNvbS91YnVudHUtcG9ydHMvIHhlbmlhbCBtYWluIG11bHRpdmVyc2UgcmVzdHJpY3RlZCB1bml2ZXJzZQpkZWIgW2FyY2g9YXJtNjRdIGh0dHA6Ly9wb3J0cy51YnVudHUuY29tL3VidW50dS1wb3J0cy8geGVuaWFsLXVwZGF0ZXMgbWFpbiBtdWx0aXZlcnNlIHJlc3RyaWN0ZWQgdW5pdmVyc2UK | base64 -d | sudo tee /etc/apt/sources.list.d/ports.list
-          sudo apt-get update
-          sudo apt-get install -y build-essential crossbuild-essential-arm64
-          sudo apt-get install -y libgl1-mesa-dev:arm64 libfontconfig1-dev:arm64 libfreetype6-dev:arm64 libx11-dev:arm64 libx11-xcb-dev:arm64 libxext-dev:arm64 libxfixes-dev:arm64 libxi-dev:arm64 libxrender-dev:arm64 libxcb1-dev:arm64 libxcb-glx0-dev:arm64 libxcb-keysyms1-dev:arm64 libxcb-image0-dev:arm64 libxcb-shm0-dev:arm64 libxcb-icccm4-dev:arm64 libxcb-sync0-dev:arm64 libxcb-xfixes0-dev:arm64 libxcb-shape0-dev:arm64 libxcb-randr0-dev:arm64 libxcb-render-util0-dev:arm64 libxcb-xinerama0-dev:arm64 libxkbcommon-dev:arm64 libxkbcommon-x11-dev:arm64
+          echo ZGViIFthcmNoPWFybTY0XSBodHRwOi8vcG9ydHMudWJ1bnR1LmNvbS91YnVudHUtcG9ydHMvIHhlbmlhbCBtYWluIG11bHRpdmVyc2UgcmVzdHJpY3RlZCB1bml2ZXJzZQpkZWIgW2FyY2g9YXJtNjRdIGh0dHA6Ly9wb3J0cy51YnVudHUuY29tL3VidW50dS1wb3J0cy8geGVuaWFsLXVwZGF0ZXMgbWFpbiBtdWx0aXZlcnNlIHJlc3RyaWN0ZWQgdW5pdmVyc2UK | base64 -d > /etc/apt/sources.list.d/ports.list
+          apt-get update
+          apt-get install -y build-essential crossbuild-essential-arm64
+          apt-get install -y libgl1-mesa-dev:arm64 libfontconfig1-dev:arm64 libfreetype6-dev:arm64 libx11-dev:arm64 libx11-xcb-dev:arm64 libxext-dev:arm64 libxfixes-dev:arm64 libxi-dev:arm64 libxrender-dev:arm64 libxcb1-dev:arm64 libxcb-glx0-dev:arm64 libxcb-keysyms1-dev:arm64 libxcb-image0-dev:arm64 libxcb-shm0-dev:arm64 libxcb-icccm4-dev:arm64 libxcb-sync0-dev:arm64 libxcb-xfixes0-dev:arm64 libxcb-shape0-dev:arm64 libxcb-randr0-dev:arm64 libxcb-render-util0-dev:arm64 libxcb-xinerama0-dev:arm64 libxkbcommon-dev:arm64 libxkbcommon-x11-dev:arm64
 
       # Runs a set of commands using the runners shell
       - name: Download Qt Sources
