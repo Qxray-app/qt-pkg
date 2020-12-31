@@ -40,6 +40,9 @@ jobs:
         run: |
           wget -q https://download.qt.io/archive/qt/5.15/5.15.2/single/qt-everywhere-src-5.15.2.tar.xz
       - name: Building
+        env:
+          CC: aarch64-linux-gnu-gcc
+          CXX: aarch64-linux-gnu-g++
         run: |
           tar xJf qt-everywhere-src-5.15.2.tar.xz
           cd qt-everywhere-src-5.15.2
